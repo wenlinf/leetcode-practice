@@ -14,6 +14,18 @@ public class FindEvenDigitsNums {
         }
         return result;
     }
+
+    public static int findNumbersSolution2(int[] nums) {
+        int digits = 0;
+        int result = 0;
+        for (int i = 0; i < nums.length; i++) {
+            digits = (int)Math.floor(Math.log10(nums[i])) + 1;
+            if (digits % 2 == 0) {
+                result++;
+            }
+        }
+        return result;
+    }
 }
 
 
