@@ -22,4 +22,5 @@ class DuplicateZero {
             arr[i] = newArr[i];
         }
     }
+    //leetcode solution: https://leetcode.com/problems/duplicate-zeros/solution/
 }
