@@ -3,13 +3,11 @@ class RemoveDuplicates {
         int count = 0;
         int pointer = 1;
         while (pointer < nums.length) {
-            if (nums[pointer] == nums[count]) {
-                pointer++;
-            } else {
+            if (nums[pointer] != nums[count]) {
                 count++;
                 nums[count] = nums[pointer];
-                pointer++;
             }
+            pointer++;
         }
         return ++count;
     }
