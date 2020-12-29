@@ -8,6 +8,7 @@ class RemoveDuplicates {
             } else {
                 count++;
                 nums[count] = nums[pointer];
+                pointer++;
             }
         }
         return ++count;
