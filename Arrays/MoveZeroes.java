@@ -18,8 +18,7 @@ class MoveZeroes {
         int readPointer = 0;
         while (readPointer < nums.length) {
            if (nums[readPointer] != 0) {
-            nums[writePointer] = nums[readPointer];
-            writePointer++;
+            nums[writePointer++] = nums[readPointer];
            } 
            readPointer++;
         }
