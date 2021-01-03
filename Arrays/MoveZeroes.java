@@ -22,10 +22,8 @@ class MoveZeroes {
            } 
            readPointer++;
         }
-        if(writePointer != readPointer) {
-            for (int i = writePointer; i < nums.length; i++) {
+        for (int i = writePointer; i < nums.length; i++) {
                 nums[i] = 0;
-            }
         }
     }
 }
