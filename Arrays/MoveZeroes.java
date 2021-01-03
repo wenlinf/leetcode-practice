@@ -26,4 +26,17 @@ class MoveZeroes {
                 nums[i] = 0;
         }
     }
+    public void moveZeroesSolution3(int[] nums) {
+        int writePointer = 0;
+        int readPointer = 0;
+        int temp;
+        while (readPointer < nums.length) {
+           if (nums[readPointer] != 0) {
+            temp = nums[writePointer];
+            nums[writePointer++] = nums[readPointer];
+            nums[readPointer] = temp;
+           } 
+           readPointer++;
+        }
+    }
 }
