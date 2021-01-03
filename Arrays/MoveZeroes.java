@@ -13,4 +13,20 @@ class MoveZeroes {
                  nums[i] = newArr[i];
              } 
     }
+    public void moveZeroesInPlace(int[] nums) {
+        int writePointer = 0;
+        int readPointer = 0;
+        while (readPointer < nums.length) {
+           if (nums[readPointer] != 0) {
+            nums[writePointer] = nums[readPointer];
+            writePointer++;
+           } 
+           readPointer++;
+        }
+        if(writePointer != readPointer) {
+            for (int i = writePointer; i < nums.length; i++) {
+                nums[i] = 0;
+            }
+        }
+    }
 }
