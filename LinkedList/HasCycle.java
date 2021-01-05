@@ -19,4 +19,23 @@ public class Solution {
         }
         return false;
     }
+    public boolean hasCycleTwoPointer(ListNode head) {
+        if (head == null || head.next == null) return false;
+        int fast = 2;
+        int slow = 1;
+        ListNode slowHead = head; //???
+        while (head != null) {
+            for (int i = 0; i < fast; i++) {
+                if (head.next == null) return false;
+                head = head.next;
+            }
+            fast += 2;
+            for (int i = 0; i < slow; i++) {
+                slowHead = slowHead.next;
+            }
+            slow++;
+            if (head == slowHead) return true;
+        }
+        return false;
+    }
 }
