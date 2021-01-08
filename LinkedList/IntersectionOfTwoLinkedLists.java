@@ -25,6 +25,7 @@ public class IntersectionOfTwoLinkedLists {
             } else {
                ptB = ptB.next; 
             } 
+            if (ptA == null && ptB == null) return null;
             //if ( tailA != null && tailB != null) return null;
             //if (ptA.next == null && ptB.next == null && ptA != ptB) return null;
         }
