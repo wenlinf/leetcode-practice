@@ -1,4 +1,4 @@
-class MyLinkedList {
+class MyDoublyLinkedList {
         private class Node {
             public int val;
             public Node next;
@@ -63,8 +63,10 @@ class MyLinkedList {
             if (index < 0 || index > this.size) return;
             if (index == 0) {
                 addAtHead(val);
+                return;
             } else if (index == this.size) {
                 addAtTail(val);
+                return;
             } else {
                 Node newNode = new Node(val);
                 Node currentNode = this.head;
@@ -89,6 +91,14 @@ class MyLinkedList {
                 Node newHead = this.head.next;
                 this.head.next = null;
                 this.head = newHead;
+            } else if (index == size - 1) {
+                Node currentNode = this.head;
+                for (int i = 0; i < index-1; i++) {
+                    currentNode = currentNode.next;
+                }
+                Node nodeToDelete = currentNode.next;
+                nodeToDelete.prev = null;
+                currentNode.next = null;
             } else {
                 Node currentNode = this.head;
                 for (int i = 0; i < index-1; i++) {
@@ -126,23 +136,26 @@ class MyLinkedList {
 
     public static void main(String[] args) {
         MyLinkedList myLinkedList = new MyLinkedList();
-        myLinkedList.addAtHead(7);
         myLinkedList.addAtHead(2);
-        myLinkedList.addAtHead(1);
-        myLinkedList.addAtIndex(3, 0);
+        myLinkedList.deleteAtIndex(1);
+        myLinkedList.addAtHead(2);
+        myLinkedList.addAtHead(7);
+        myLinkedList.addAtHead(3);
+        myLinkedList.addAtHead(2);
+        myLinkedList.addAtHead(5);
+//        myLinkedList.addAtHead(5);
+        myLinkedList.addAtTail(5);
+//        myLinkedList.addAtIndex(3, 0);
 //        myLinkedList.addAtIndex(0, 2);
 //        myLinkedList.addAtIndex(1, 2);
-        myLinkedList.deleteAtIndex(2);
-        myLinkedList.addAtTail(6);
-        myLinkedList.get(4);
-        myLinkedList.addAtHead(4);
-        myLinkedList.addAtIndex(5, 0);
-        myLinkedList.addAtHead(6);
+        myLinkedList.get(5);
+//        myLinkedList.addAtIndex(5, 0);
 //        myLinkedList.get(0);
        // myLinkedList.addAtHead(1);
       //  myLinkedList.addAtHead(2);
       //  int i = myLinkedList.get(1);
-        myLinkedList.deleteAtIndex(0);
+        myLinkedList.deleteAtIndex(6);
+        myLinkedList.deleteAtIndex(4);
         //System.out.println(i);
     }
 }
