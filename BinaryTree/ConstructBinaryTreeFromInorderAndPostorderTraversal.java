@@ -28,15 +28,13 @@ class ConstructBinaryTreeFromInorderAndPostorderTraversal {
         int[] subRightTreePostorder;
         if (i == inorder.length - 1) {
             root.right = null;
-            subLeftTreeInorder = Arrays.copyOfRange(inorder, 0, inorder.length - 1);
-            subLeftTreePostorder = Arrays.copyOfRange(postorder, 0, postorder.length - 1);
         } else {
             subRightTreeInorder = Arrays.copyOfRange(inorder, i+1, inorder.length);
             subRightTreePostorder = Arrays.copyOfRange(postorder, i, postorder.length - 1);
             root.right = buildTree(subRightTreeInorder, subRightTreePostorder);
-            subLeftTreeInorder = Arrays.copyOfRange(inorder, 0, i);
-            subLeftTreePostorder = Arrays.copyOfRange(postorder, 0, i);
         }
+        subLeftTreeInorder = Arrays.copyOfRange(inorder, 0, i);
+        subLeftTreePostorder = Arrays.copyOfRange(postorder, 0, i);
         root.left = buildTree(subLeftTreeInorder, subLeftTreePostorder);          
         return root;
     }
