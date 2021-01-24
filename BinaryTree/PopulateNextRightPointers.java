@@ -47,3 +47,5 @@ class PopulateNextRightPointers {
         return root;
     }
 }
+
+//better solution: https://leetcode.com/problems/populating-next-right-pointers-in-each-node/discuss/37461/Java-solution-with-O(1)-memory%2B-O(n)-time
