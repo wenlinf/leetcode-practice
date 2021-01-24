@@ -31,9 +31,7 @@ class PopulateNextRightPointers {
             int currentSize = queue.size();
             for (int i = 0; i < currentSize; i++) {
                 firstNode = queue.remove(0);
-                if (i == currentSize - 1) {
-                    firstNode.next = null;
-                } else {
+                if (i != currentSize - 1) {
                     firstNode.next = queue.get(0);
                 }
                 if (firstNode.left != null) {
