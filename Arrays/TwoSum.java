@@ -35,4 +35,19 @@ class TwoSum {
         }
         return result;
     }
+        public int[] twoSumSolution3(int[] nums, int target) {
+        int complement;
+        int[] result = new int[2];
+        Map<Integer,Integer> dic = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            complement = target - nums[i];
+            if (dic.containsKey(complement) && dic.get(complement) != i) {
+                result[0] = i;
+                result[1] = dic.get(complement);
+                break;
+            }
+            dic.put(nums[i], i);
+        }
+        return result;
+    }
 }
