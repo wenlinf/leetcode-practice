@@ -14,9 +14,6 @@ class PlusOne {
         }
         int[] res = new int[digits.length + 1];
         res[0] = 1;
-        for (int j = 0; j < digits.length; j++) {
-            res[j+1] = digits[j];
-        }
         return res;
     }
 }
