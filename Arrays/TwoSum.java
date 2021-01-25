@@ -19,4 +19,20 @@ class TwoSum {
         }
         return result;
     }
+    public int[] twoSumSolution2(int[] nums, int target) {
+        Map<Integer,Integer> dic = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            dic.put(nums[i], i);
+        }
+        int complement;
+        int[] result = new int[2];
+        for (int i = 0; i < nums.length; i++) {
+            complement = target - nums[i];
+            if (dic.containsKey(complement) && dic.get(complement) != i) {
+                result[0] = i;
+                result[1] = dic.get(complement);
+            }
+        }
+        return result;
+    }
 }
