@@ -1,16 +1,12 @@
 class RomanToInteger {
-   public int romanToInt(String s) {
+    public int romanToInt(String s) {
         int result = 0;    
-        for (int i = 0; i < s.length(); i++) {
+        for (int i = 0; i < s.length() - 1; i++) {
             int val = valueOfChar(s.charAt(i));
-            if (i != s.length() - 1) {
                 if (val < valueOfChar(s.charAt(i + 1))) result -= val;
-                else result += val;
-            } else {
-               result += val; 
-            }     
+                else result += val;   
         }
-        return result;
+        return result + valueOfChar(s.charAt(s.length() - 1));
     }
     private int valueOfChar(char ch) {
         int result = 0;
