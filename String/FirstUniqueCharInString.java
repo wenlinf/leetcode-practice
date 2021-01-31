@@ -8,17 +8,20 @@ class FirstUniqueCharInString {
             }
             else map.put(s.charAt(i), 1);
         }
-        char unique = 'A';
-        for (Map.Entry<Character, Integer> entry: map.entrySet()) {
-            if (entry.getValue() == 1) {
-                unique = entry.getKey();
-                break;
-            }
-        }
-        if (unique == 'A') return -1;
+//         char unique = 'A';
+//         for (Map.Entry<Character, Integer> entry: map.entrySet()) {
+//             if (entry.getValue() == 1) {
+//                 unique = entry.getKey();
+//                 break;
+//             }
+//         }
+//         if (unique == 'A') return -1;
+//         for (int i = 0; i < s.length(); i++) {
+//             if (s.charAt(i) == unique) return i;
+//         }
         for (int i = 0; i < s.length(); i++) {
-            if (s.charAt(i) == unique) return i;
-        }
+             if (map.get(s.charAt(i)) == 1) return i;
+         }
         return -1;
     }
 }
