@@ -16,12 +16,9 @@
 class MinDepthOfBinaryTree {
     public int minDepth(TreeNode root) {
         if (root == null) return 0;
-        if (root.left == null && root.right == null) return 1;
-        int leftDepth = 1;
-        int rightDepth = 1;
-        if (root.left != null) leftDepth += minDepth(root.left);
-        if (root.right != null) rightDepth += minDepth(root.right);
-        if (leftDepth == 1 || rightDepth == 1) return Math.max(leftDepth, rightDepth);
-        return Math.min(leftDepth, rightDepth);
+        int leftDepth = minDepth(root.left);
+        int rightDepth = minDepth(root.right);
+        if (leftDepth == 0 || rightDepth == 0) return Math.max(leftDepth, rightDepth) + 1;
+        return Math.min(leftDepth, rightDepth) + 1;
     }
 }
