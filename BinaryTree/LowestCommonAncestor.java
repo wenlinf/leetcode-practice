@@ -35,4 +35,18 @@ class LowestCommonAncestor {
         }
         return result;
     }
+    public TreeNode lowestCommonAncestor2(TreeNode root, TreeNode p, TreeNode q) {
+        TreeNode result = root;
+        if ((p.val <= root.val && q.val >= root.val) || (q.val <= root.val && p.val >= root.val)) {
+            return result;
+        }
+        if (p.val < root.val && q.val < root.val) {
+            result = lowestCommonAncestor(root.left, p, q);
+        } else if (p.val > root.val && q.val > root.val) {
+            result = lowestCommonAncestor(root.right, p, q);
+        }
+        return result;
+    }   
 }
+
+
