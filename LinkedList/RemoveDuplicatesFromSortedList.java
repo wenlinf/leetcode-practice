@@ -12,18 +12,12 @@ class RemoveDuplicatesFromSortedList {
     public ListNode deleteDuplicates(ListNode head) {
         if (head == null) return null;
         ListNode curr = head;
-        while (curr != null) {
-            if (curr.next != null && curr.next.val == curr.val) {
-                if (curr.next.next != null) {
-                    ListNode temp = curr.next;
-                    curr.next = curr.next.next;
-                    temp.next = null;
-                } else {
-                    curr.next = null;
-                }
+        while (curr != null && curr.next != null) {
+            if (curr.next.val == curr.val) {
+                curr.next = curr.next.next;
             } else {
-                curr = curr.next;
-            }   
+                curr = curr.next; 
+            } 
         }
         return head;
     }
