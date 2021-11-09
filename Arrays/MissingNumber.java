@@ -10,14 +10,13 @@ class MissingNumber {
         }
         return result;
     }
+
     public int missingNumberBitManipulation(int[] nums) {
         int res = 0;
-        for (int i = 0; i <= nums.length; i++) {
-            res ^= i;
-        }
         for (int i = 0; i < nums.length; i++) {
-            res ^= nums[i];
+            res ^= i ^ nums[i];
         }
+        res ^= nums.length;
         return res;
     }
 }
