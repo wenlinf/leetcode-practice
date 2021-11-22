@@ -1,5 +1,19 @@
 class UniquePaths {
-    public int uniquePaths(int m, int n) {
+    public int uniquePathsDP(int m, int n) {
+        int[][] cache = new int[m][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (i == 0 || j == 0) {
+                    cache[j][i] = 1;
+                } else {
+                    cache[j][i] = cache[j - 1][i] + cache[j][i - 1];
+                }
+            }
+        }
+        return cache[m - 1][n - 1];
+    }
+    
+    public int uniquePathsMath(int m, int n) {
         if (m == 1 || n == 1) return 1;
         m--;
         n--;
