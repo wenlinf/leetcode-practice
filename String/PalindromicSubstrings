@@ -16,4 +16,43 @@ class PalindromicSubstrings {
         }
         return true;
     }
+    
+    public int countSubstrings2(String s) {
+        int count = 0;
+        int lo;
+        int hi;
+        for (int i = 0; i < s.length(); i++) {
+            count++;
+            lo = i - 1;
+            hi = i + 1;
+            while (lo >= 0 && hi <= s.length() - 1) {
+                if (s.charAt(lo) != s.charAt(hi)) {
+                    break;
+                } else {
+                    count++;
+                    lo--;
+                    hi++;
+                }
+            }
+        }
+        int next;
+        for (int i = 0; i < s.length() - 1; i++) {
+            next = i + 1;
+            lo = i - 1;
+            hi = next + 1;
+            if (s.charAt(i) == s.charAt(next)) {
+                count++;
+                while (lo >= 0 && hi <= s.length() - 1) {
+                    if (s.charAt(lo) == s.charAt(hi)) {
+                        lo--;
+                        hi++;
+                        count++;
+                    } else{
+                        break;
+                    }
+                }
+            }
+        }
+        return count;
+    }  
 }
