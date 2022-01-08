@@ -24,4 +24,24 @@ class SortColors {
             }
         }
     }
+    
+    public void sortColorsTwoPointers(int[] nums) {
+        int pt0 = 0;
+        int pt2 = nums.length - 1;
+        
+        int curr = 0;
+        while (curr <= pt2) {
+            if (nums[curr] == 0 && curr != pt0) {
+                nums[curr] = nums[pt0];
+                nums[pt0] = 0;  
+                pt0++;
+            } else if (nums[curr] == 2) {
+                nums[curr] = nums[pt2];
+                nums[pt2] = 2;
+                pt2--;
+            } else {
+                curr++;
+            }  
+        }
+    }
 }
