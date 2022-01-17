@@ -20,6 +20,18 @@ class GraphValidTree {
             if (visited[i] == 0) return false;
         }
         return true;
+        
+        /*
+        // My first solution was to check the number of components
+        for (int i = 0; i < n; i++) {
+            if (visited[i] == 0) {
+                components++;
+                dfs(adjList, visited, i);
+            }
+        }
+        
+        return components == 1;
+        */
     }
     
     public void dfs(List<Integer>[] adjList, int[] visited, int startNode) {
