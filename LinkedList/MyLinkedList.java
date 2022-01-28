@@ -1,3 +1,15 @@
+/*
+Time complexity:
+- addAtHead: O(1)
+- addAtTail: O(n)
+- get: O(n)
+- addAtIndex: O(n)
+- deleteAtIndex: O(n)
+
+Space complexity:
+O(1) for all operations
+*/
+
 class MyLinkedList {
     private class Node {
         public int val;
