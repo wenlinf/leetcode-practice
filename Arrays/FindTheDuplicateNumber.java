@@ -14,4 +14,20 @@ class FindTheDuplicateNumber {
         }
         return result;
     }
+    public int findDuplicateTwoPointer(int[] nums) {
+        if (nums.length == 2) return nums[0];
+        int slow = nums[0];
+        int fast = nums[0];
+        do {
+            fast = nums[nums[fast]];
+            slow = nums[slow];
+        } while (fast != slow);
+       
+        fast = nums[0];
+        while (fast != slow) {
+            fast = nums[fast];
+            slow = nums[slow];
+        }
+        return fast;
+    }
 }
