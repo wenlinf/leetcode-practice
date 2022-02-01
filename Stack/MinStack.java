@@ -1,30 +1,29 @@
 class MinStack {
-    private List<Integer> minStack;
+    private Stack<int[]> minStack;
 
-    /** initialize your data structure here. */
     public MinStack() {
-        minStack = new ArrayList<>();
+        minStack = new Stack<>();
     }
     
     public void push(int val) {
-        minStack.add(val);
+        if (minStack.isEmpty()) {
+            minStack.push(new int[]{val, val});
+        } else {
+            int minVal = Math.min(val, minStack.get(minStack.size() - 1)[1]);
+            minStack.push(new int[]{val, minVal});
+        }
     }
     
     public void pop() {
-        minStack.remove(minStack.size() - 1); 
+        minStack.pop();
     }
     
     public int top() {
-        if (minStack.size() == 0) return -1;
-        return minStack.get(minStack.size() - 1);
+        return minStack.get(minStack.size() - 1)[0];
     }
     
     public int getMin() {
-        int min = Integer.MAX_VALUE;
-        for (int i = 0; i < minStack.size(); i++) {
-            if (minStack.get(i) < min) min = minStack.get(i);
-        }
-        return min;
+        return minStack.get(minStack.size() - 1)[1];
     }
 }
 
