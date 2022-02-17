@@ -8,7 +8,7 @@ class Solution {
         UnionFind unionFind = new UnionFind(isConnected.length);
         // traverse the matrix and connect nodes where matrix[i][j] == 1
         for (int i = 0; i < isConnected.length; i++) {
-            for (int j = 0; j < isConnected[0].length; j++) {
+            for (int j = i; j < isConnected[0].length; j++) {
                 if (isConnected[i][j] == 1) {
                     unionFind.union(i, j);
                 }
