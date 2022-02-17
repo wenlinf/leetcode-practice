@@ -32,10 +32,13 @@ class Solution {
         public int[] root;
         public int[] rank;
         private int size;
+        // can add a count field here
+        // private int count;
         
         public UnionFind(int size) {
             this.root = new int[size];
             this.rank = new int[size];
+            // this.count = size;
             for (int i = 0; i < size; i++) {
                 root[i] = i;
                 rank[i] = 1;
@@ -59,10 +62,16 @@ class Solution {
                 root[rootY] = rootX;
                 rank[rootX]++;
             }
+            //this.count--;
         }
         
         public boolean connected(int x, int y) {
             return find(x) == find(y);
         }
+        /*
+        public int getCount() {
+            return this.count;
+        }
+        */
     }
 }
