@@ -1,39 +1,68 @@
 class Solution {
     public int findCircleNum(int[][] isConnected) {
-        int numOfNodes = isConnected.length;
-        int[] root = new int[numOfNodes];
-        for (int i = 0; i < root.length; i++) {
-            root[i] = i;
+        // if n == 1, return 1
+        if (isConnected.length == 1) {
+            return 1;
         }
+        // create unionfind instance 
+        UnionFind unionFind = new UnionFind(isConnected.length);
+        // traverse the matrix and connect nodes where matrix[i][j] == 1
+        for (int i = 0; i < isConnected.length; i++) {
+            for (int j = 0; j < isConnected[0].length; j++) {
+                if (isConnected[i][j] == 1) {
+                    unionFind.union(i, j);
+                }
+            }
+        }
+        // traverse the root array, and count the number of distinct roots in the array
+        Set<Integer> provinces = new HashSet<>();
+        for (int i = 0; i < unionFind.root.length; i++) {
+            if (i == unionFind.root[i]) {
+                provinces.add(unionFind.root[i]);
+            } else {
+                provinces.add(unionFind.find(i));
+            }
+        }
+        // return the count
+        return provinces.size();
+    }
+    
+    
+    public class UnionFind {
+        public int[] root;
+        public int[] rank;
+        private int size;
         
-        for (int i = 0; i < numOfNodes; i++) {
-            for (int j = i + 1; j < numOfNodes; j++) {
-                if (isConnected[i][j] == 1 && i != j) {
-                    union(root[j], root[i], root);
-                } 
+        public UnionFind(int size) {
+            this.root = new int[size];
+            this.rank = new int[size];
+            for (int i = 0; i < size; i++) {
+                root[i] = i;
+                rank[i] = 1;
             }
         }
         
-        Set<Integer> set = new HashSet<>();
-        for (int i = 0; i < root.length; i++) {
-            int rootNode = find(i, root);
-            set.add(rootNode);
+        public int find(int node) {
+            if (this.root[node] == node) return node;
+            return root[node] = find(root[node]); // ??
         }
-        return set.size();
-    }
-    
-    public int find(int num, int[] root) {
-        while (root[num] != num) {
-            num = root[num];
+        
+        public void union(int x, int y) {
+            int rootX = find(x);
+            int rootY = find(y);
+            if (rootX == rootY) return;
+            if (rank[rootX] > rank[rootY]) {
+                root[rootY] = rootX;
+            } else if (rank[rootX] < rank[rootY]) {
+                root[rootX] = rootY;
+            } else {
+                root[rootY] = rootX;
+                rank[rootX]++;
+            }
         }
-        return num;
-    }
-    
-    public void union(int x, int y, int[] root) {
-        int rootX = find(x, root);
-        int rootY = find(y, root);
-        if (rootX != rootY) {
-            root[rootX] = rootY;
+        
+        public boolean connected(int x, int y) {
+            return find(x) == find(y);
         }
     }
 }
