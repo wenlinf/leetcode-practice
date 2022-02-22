@@ -7,7 +7,7 @@ class Solution {
         int pt1 = 0;
         int pt2 = 0;
         int currSum = 0;
-        int minLen = nums.length;
+        int minLen = Integer.MAX_VALUE;
         boolean hasMin = false;
         while (pt2 < nums.length) {
             if (nums[pt2] + currSum < target) {
@@ -21,7 +21,6 @@ class Solution {
             }
             
         }
-        if (hasMin) return minLen;
-        return 0;
+        return minLen == Integer.MAX_VALUE ? 0 : minLen; 
     }
 }
