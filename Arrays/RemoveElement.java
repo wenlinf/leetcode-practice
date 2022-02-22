@@ -16,4 +16,17 @@ class Solution {
         }
         return start;
     }
+    
+    public int removeElement(int[] nums, int val) {
+        int fast = 0;
+        int slow = -1;
+        while (fast < nums.length) {
+            if (nums[fast] != val) {
+                slow++;
+                nums[slow] = nums[fast];
+            } 
+            fast++;
+        }
+        return ++slow;
+    }
 }
