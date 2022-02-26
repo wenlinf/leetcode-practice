@@ -43,16 +43,14 @@ class Solution {
                     path.remove(path.size() - 1);
                     pathSum -= pop.val;
                     stack.pop();
-                } else if (pop.left != null && !visited.contains(pop.left)) {
+                } else {
                     if (pop.right != null) {
                         stack.push(pop.right);
                     }
-                    stack.push(pop.left);
-                } else if (pop.left == null && pop.right != null) {
-                    if (!visited.contains(pop.right)) {
-                        stack.push(pop.right);
+                    if (pop.left != null) {
+                        stack.push(pop.left);
                     }
-                }
+                } 
                 visited.add(pop);
             } else {
                 stack.pop();
