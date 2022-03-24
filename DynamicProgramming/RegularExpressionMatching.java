@@ -5,7 +5,6 @@ class Solution {
     public boolean isMatch(String s, String p) {
         this.s = s;
         this.p = p;
-
         return dp(0, 0);
     }
     
@@ -66,8 +65,7 @@ class Solution {
         }
         String key = String.valueOf(i) + "," + String.valueOf(j);
         if (memo.containsKey(key)) return memo.get(key);
-        boolean result = false;
-       
+        boolean result = false;  
         if (s.charAt(i) == p.charAt(j) || p.charAt(j) == '.') {
             if (j < p.length() - 1 && p.charAt(j + 1) == '*') {
                 result = dp(i + 1, j) || dp(i, j + 2);
