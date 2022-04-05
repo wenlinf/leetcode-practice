@@ -19,14 +19,14 @@ class Solution {
     
     public int removeElement(int[] nums, int val) {
         int fast = 0;
-        int slow = -1;
+        int slow = 0;
         while (fast < nums.length) {
             if (nums[fast] != val) {
-                slow++;
                 nums[slow] = nums[fast];
+                slow++;
             } 
             fast++;
         }
-        return ++slow;
+        return slow;
     }
 }
