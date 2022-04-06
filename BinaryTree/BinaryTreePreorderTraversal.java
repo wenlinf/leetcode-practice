@@ -23,3 +23,14 @@ class BinaryTreePreorderTraversal {
         return result;
     }
 }
+
+class Solution {
+    List<Integer> nodes = new ArrayList<>();
+    public List<Integer> preorderTraversal(TreeNode root) {
+        if (root == null) return nodes;
+        nodes.add(root.val);
+        preorderTraversal(root.left);
+        preorderTraversal(root.right);
+        return nodes;
+    }
+}
