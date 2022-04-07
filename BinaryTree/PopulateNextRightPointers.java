@@ -46,4 +46,20 @@ class PopulateNextRightPointers {
     }
 }
 
+class Solution {
+    public Node connect(Node root) {
+        if (root == null) return null;
+        traverse(root.left, root.right);
+        return root;
+    }
+    
+    private void traverse(Node node1, Node node2) {
+        if (node1 == null || node2 == null) return;
+        node1.next = node2;
+        traverse(node1.left, node1.right);
+        traverse(node1.right, node2.left);
+        traverse(node2.left, node2.right);
+    }
+}
+
 //better solution: https://leetcode.com/problems/populating-next-right-pointers-in-each-node/discuss/37461/Java-solution-with-O(1)-memory%2B-O(n)-time
