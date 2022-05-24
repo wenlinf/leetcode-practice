@@ -36,3 +36,91 @@ boolean canJump(int[] nums) {
     return farthest >= n - 1;
 }
 */
+
+// DP: Top down:
+class Solution {
+    public boolean canJump(int[] nums) {
+        this.nums = nums;
+        this.n = nums.length;
+        this.memo = new State[n];
+        Arrays.fill(memo, State.UNKNOWN);
+        return dp(0) == State.GOOD ? true : false;
+    }
+    
+    private int[] nums;
+    private int n;
+    private State[] memo;
+    
+    private State dp(int index) {
+        if (memo[index] != State.UNKNOWN) return memo[index];
+        if (index >= n - 1) return State.GOOD;
+        for (int i = index + 1; i <= index + nums[index]; i++) {
+            if (dp(i) == State.GOOD) {
+                memo[index] = State.GOOD;
+                    break;
+            }
+        }
+        if (memo[index] == State.UNKNOWN) {
+            memo[index] = State.BAD;
+        }
+        return memo[index];
+    }
+    
+    private enum State {
+        GOOD, BAD, UNKNOWN
+    }
+}
+
+//DP: Bottom up
+class Solution {
+    public boolean canJump(int[] nums) {
+        int n = nums.length;
+        this.memo = new State[n];
+        Arrays.fill(memo, State.UNKNOWN);
+        memo[n - 1] = State.GOOD;
+        return dp(nums);
+    }
+    
+    private State[] memo;
+    
+    private boolean dp(int[] nums) {
+        int n = nums.length;
+        for (int i = n - 2; i >= 0; i--) {
+            for (int j = i + 1; j <= i + nums[i]; j++) {
+                if (j > n - 1) break;
+                if (memo[j] == State.GOOD) {
+                    memo[i] = State.GOOD;
+                    break;
+                }
+            }
+            if (memo[i] == State.UNKNOWN) {
+                memo[i] = State.BAD;
+            }
+        }
+        return memo[0] == State.GOOD;
+    }
+    
+    private enum State {
+        GOOD, BAD, UNKNOWN
+    }
+}
+
+// recursion: Time limit exceeded
+class Solution {
+    public boolean canJump(int[] nums) {
+        this.nums = nums;
+        this.n = nums.length;
+        return dp(0);
+    }
+    
+    private int[] nums;
+    private int n;
+    private boolean dp(int index) {
+        if (index >= n - 1) return true;
+        if (nums[index] == 0 && index < n - 1) return false;
+        for (int i = index + 1; i <= index + nums[index]; i++) {
+            if (dp(i)) return true;
+        }
+        return false;
+    }
+}
