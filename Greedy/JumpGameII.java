@@ -38,3 +38,29 @@ class Solution {
         return minJumps;
     }
 }
+
+// dp bottom up
+class Solution {
+    public int jump(int[] nums) {
+        int n = nums.length;
+        this.memo = new int[n];
+        Arrays.fill(memo,  n + 1);
+        memo[n - 1] = 0;
+        dp(nums);
+        return memo[0];
+    }
+    
+    private int[] memo;
+    private void dp(int[] nums) {
+        int n = nums.length;
+        for (int i = n - 2; i >= 0; i--) {
+            if (nums[i] + i >= n - 1) {
+                memo[i] = 1;
+            } else {
+                for (int j = i + 1; j <= i + nums[i]; j++) {
+                    memo[i] = Math.min(memo[i], 1 + memo[j]);
+                }
+            }
+        }
+    } 
+}
