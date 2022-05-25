@@ -37,3 +37,34 @@ class Solution {
         }
     }
 }
+
+class Solution {    
+    public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
+        if (root == null) return null;
+        if (root.left == null && root.right == null) return null;
+        if (root == p) {
+            TreeNode leftMostChild = findLeftMostChild(root.right);
+            return leftMostChild;
+        }
+        if (p.val > root.val) {
+            return inorderSuccessor(root.right, p);
+        }
+        if (p.val < root.val) {
+            TreeNode result = inorderSuccessor(root.left, p);
+            if (result == null) {
+                return root;
+            }
+            return result;
+        }
+        return null;
+    }
+    
+    private TreeNode findLeftMostChild(TreeNode root) {
+        if (root == null) return null;
+        TreeNode curr = root;
+        while (curr.left != null) {
+            curr = curr.left;
+        }
+        return curr;
+    }
+}
