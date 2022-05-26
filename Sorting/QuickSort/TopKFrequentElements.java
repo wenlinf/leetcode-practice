@@ -74,3 +74,4 @@ class Solution {
         nums[j] = temp;
     }
 }
+//There is another solution using heap. Link: https://github.com/wenlinf/leetcode-practice/blob/main/Heap/TopKFrequentElements.java
