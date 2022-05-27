@@ -1,6 +1,58 @@
 class Solution {
     public int findKthLargest(int[] nums, int k) {
         shuffle(nums);
+        int n = nums.length;
+        quickSelect(nums, 0, n - 1, n - k);
+        return nums[n - k];
+    }
+    
+    private void quickSelect(int[] nums, int lo, int hi, int kthLargest) {
+        if (lo >= hi) return;
+        int pivot = partition(nums, lo, hi);
+        if (pivot == kthLargest) {
+            return;
+        } else if (pivot > kthLargest) {
+            quickSelect(nums, lo, pivot - 1, kthLargest);
+        } else {
+            quickSelect(nums, pivot + 1, hi, kthLargest);
+        }
+    }
+    
+    private int partition(int[] nums, int lo, int hi) {
+        int pivot = nums[hi];
+        int l = lo - 1;
+        int r = lo;
+        while (r < hi) { 
+            if (nums[r] < pivot) {
+                l++;
+                swap(nums, l, r);
+            }
+            r++;
+        }
+        l++;
+        swap(nums, l, hi);
+        return l;
+    }
+    
+    private void shuffle(int[] nums) {
+        Random rand = new Random();
+        int n = nums.length;
+        for (int i = 0; i < n; i++) {
+            int index = i + rand.nextInt(n - i);
+            swap(nums, i, index);
+        }
+    }
+    
+    private void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+}
+
+class Solution {
+    public int findKthLargest(int[] nums, int k) {
+        shuffle(nums);
         int lo = 0;
         int hi = nums.length - 1;
         k = nums.length - k;
