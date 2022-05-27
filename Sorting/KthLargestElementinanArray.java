@@ -52,3 +52,19 @@ class Solution {
         nums[j] = temp;
     }
 }
+
+// Solution can be improved by inserting the smallest numbers first and keep the size of the heap to k
+class Solution {
+    public int findKthLargest(int[] nums, int k) {
+        PriorityQueue<Integer> pq = new PriorityQueue<>((n1, n2) -> {
+            return n2 - n1;
+        });
+        for (int i = 0; i < nums.length; i++) {
+            pq.add(nums[i]);
+        }
+        for (int i = 0; i < k - 1; i++) {
+            pq.remove();
+        }
+        return pq.poll();
+    }
+}
