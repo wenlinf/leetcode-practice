@@ -21,6 +21,18 @@ class ReverseLinkedList {
         }
         return head;
     }
+     public ListNode reverseListIterative2(ListNode head) {
+        ListNode curr = head;
+        ListNode next;
+        ListNode prev = null;
+        while (curr != null) {
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        return prev;
+    }
      public ListNode reverseListRecursive(ListNode head) {
         if (head == null || head.next == null) return head;
         ListNode p = reverseList(head.next);
