@@ -68,7 +68,6 @@ class Solution {
         return head;
     }
     
-    private ListNode successor;
     private ListNode reverseN(ListNode head, int n) {
         int index = 1;
         ListNode curr = head;
