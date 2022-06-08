@@ -9,3 +9,21 @@ class MaximumSubarray {
         return max;
     }
 }
+
+// Prefix sum solution
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int n = nums.length;
+        int[] prefix = new int[n + 1];
+        int minPrev = 0;
+        int max = nums[0];
+        for (int i = 1; i < n + 1; i++) {
+            prefix[i] = prefix[i - 1] + nums[i-1];
+        }
+        for (int i = 0; i < n; i++) {
+            minPrev = Math.min(minPrev, prefix[i]);
+            max = Math.max(max, prefix[i + 1] - minPrev);
+        }
+        return max;
+    }
+}
