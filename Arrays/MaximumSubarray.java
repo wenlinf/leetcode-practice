@@ -27,3 +27,29 @@ class Solution {
         return max;
     }
 }
+
+// Divide and conquer solution
+class Solution {
+    public int maxSubArray(int[] nums) {
+        return helper(nums, 0, nums.length - 1);
+    }
+    
+    private int helper(int[] nums, int left, int right) {
+        if (left > right) return Integer.MIN_VALUE;
+        int mid = left + (right - left) / 2;
+        int bestRightSum = 0;
+        int curr = 0;
+        for (int i = mid + 1; i <= right; i++) {
+            bestRightSum = Math.max(bestRightSum, curr += nums[i]);
+        }
+        int bestLeftSum = 0;
+        curr = 0;
+        for (int i = mid - 1; i >= left; i--) {
+            bestLeftSum = Math.max(bestLeftSum, curr += nums[i]);
+        }
+        int bestMidSum = nums[mid] + bestLeftSum + bestRightSum;
+        int bestLeft = helper(nums, left, mid - 1);
+        int bestRight = helper(nums, mid + 1, right);
+        return Math.max(Math.max(bestLeft, bestRight), bestMidSum);
+    }
+}
