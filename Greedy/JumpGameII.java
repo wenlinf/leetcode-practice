@@ -102,3 +102,24 @@ class Solution {
         return jumps;
     }
 }
+
+// solution i wrote after one month lol
+class Solution {
+    public int jump(int[] nums) {
+        int n = nums.length;
+        if (n == 1) return 0;
+        int result = 0;
+        int potential = nums[0];
+        int farthest = nums[0];
+        int i = 1;
+        while (i < n) {
+            while (i< n&&i <= farthest) {
+                potential = Math.max(potential, i + nums[i]);
+                i++;
+            }
+            farthest = potential;
+            result++;
+        }
+        return result;
+    }
+}
