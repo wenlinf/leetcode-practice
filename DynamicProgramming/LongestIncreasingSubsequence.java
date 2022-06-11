@@ -18,3 +18,30 @@ class Solution {
         return result;
     }
 }
+
+// patience sort
+class Solution {
+    public int lengthOfLIS(int[] nums) {
+        int n = nums.length;
+        if (n == 1) return n;
+        List<Integer> sub = new ArrayList<>();
+        sub.add(nums[0]);
+        for (int i = 1; i < n; i++) {
+            int num = nums[i];
+            int size = sub.size();
+            int lastSub = sub.get(size - 1);
+            if (num > lastSub) {
+                sub.add(num);
+            } else if (num == lastSub) {
+                continue;
+            } else {
+                int j = 0;
+                while (num > sub.get(j)) {
+                    j++;
+                }
+                sub.set(j, num);
+            }
+        }
+        return sub.size();
+    }
+}
