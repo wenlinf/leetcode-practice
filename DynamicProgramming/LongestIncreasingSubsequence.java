@@ -45,3 +45,45 @@ class Solution {
         return sub.size();
     }
 }
+
+// nlogn solution
+class Solution {
+    public int lengthOfLIS(int[] nums) {
+        List<Integer> temp = new ArrayList<>();
+        int len = 0;
+        int n = nums.length;
+        for (int i = 0; i < n; i++) {
+            int num = nums[i];
+            if (len == 0) {
+                len++;
+                temp.add(num);
+            } else {
+               if (num > temp.get(len - 1)) {
+                   temp.add(num);
+                   len++;
+               } else if (num <= temp.get(0)) {
+                   temp.set(0, num);
+               } else {
+                   int k = bsearch(temp, num, len - 1);
+                   temp.set(k, num);
+               }
+            } 
+        }
+        return len;
+    }
+    
+    private int bsearch(List<Integer> temp, int num, int hi) {
+        int lo = 0;
+        while (lo <= hi) {
+            int mid = lo + (hi - lo) / 2;
+            if ((num > temp.get(mid)) && (num <= temp.get(mid + 1))) {
+                return mid + 1;
+            } else if (num > temp.get(mid + 1)) {
+                lo = mid + 1;
+            } else if (num <= temp.get(mid)) {
+                hi = mid;
+            }
+        }
+        return -1;
+    }
+}
