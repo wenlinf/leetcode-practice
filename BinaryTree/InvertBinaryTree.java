@@ -33,3 +33,25 @@ class Solution {
         return root;
     }
 }
+
+//iterative solution
+class Solution {
+    public TreeNode invertTree(TreeNode root) {
+        if (root == null) return null;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while (queue.size() != 0) {
+            TreeNode node = queue.poll();
+            TreeNode temp = node.left;
+            node.left = node.right;
+            node.right = temp;
+            if (node.left != null) {
+                queue.add(node.left);
+            }
+            if (node.right != null) {
+                queue.add(node.right);
+            }
+        }
+        return root;
+    }
+}
