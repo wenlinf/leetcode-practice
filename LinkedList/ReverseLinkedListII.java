@@ -84,3 +84,47 @@ class Solution {
         return prev;
     }
 }
+
+
+//Iterative
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode reverseBetween(ListNode head, int left, int right) {
+        if (left == right) return head;
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode leftNode = dummy;
+        for (int i = 1; i < left; i++) {
+            leftNode = leftNode.next;
+        }
+        ListNode leftNext = leftNode.next;
+        
+        ListNode rightNode = head;
+        for (int i = 1; i < right; i++) {
+            rightNode = rightNode.next;
+        }
+        ListNode rightNext = rightNode.next;
+        
+        ListNode curr = leftNext;
+        ListNode prev = rightNext;
+        while (curr != rightNext) {
+            ListNode temp = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = temp;
+        }
+        leftNode.next = rightNode;
+        
+        return dummy.next;
+    }
+}
