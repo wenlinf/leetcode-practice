@@ -73,3 +73,36 @@ class Solution {
         // visited.removeLast();
     }
 }
+
+// solution using stack
+class Solution {
+    public boolean validPath(int n, int[][] edges, int source, int destination) {
+        if (source == destination) return true;
+        Map<Integer, List<Integer>> graph = new HashMap<>();
+        for (int[] edge : edges) {
+            int from = edge[0];
+            int to = edge[1];
+            if (!graph.containsKey(from)) {
+                graph.put(from, new ArrayList<>());
+            }
+            if (!graph.containsKey(to)) {
+                graph.put(to, new ArrayList<>());
+            }
+            graph.get(from).add(to);
+            graph.get(to).add(from);
+        }
+        Stack<Integer> stack = new Stack<>();
+        stack.push(source);
+        boolean[] visited = new boolean[n];
+        while (!stack.isEmpty()) {
+            int top = stack.pop();
+            visited[top] = true;
+            List<Integer> adjList = graph.get(top);
+            for (int neighbour : adjList) {
+                if (neighbour == destination) return true;
+                if (!visited[neighbour]) stack.push(neighbour);
+            }
+        }
+        return false;
+    }
+}
