@@ -39,3 +39,37 @@ class Solution {
         return result;
     }
 }
+
+
+class Solution {
+    public List<String> wordSubsets(String[] words1, String[] words2) {
+        int[] maxCount = new int[26];
+        for (String word2 : words2) {
+            int[] count  = getCount(word2);
+            for (int i = 0; i < 26; i++) {
+                maxCount[i] = Math.max(maxCount[i], count[i]);
+            }
+        }
+        List<String> result = new ArrayList<>();
+        for (String word1 : words1) {
+            boolean isUniversal = true;
+            int[] count = getCount(word1);
+            for (int i = 0; i < 26; i++) {
+                if (count[i] < maxCount[i]) {
+                    isUniversal = false;
+                    break;
+                }
+            }
+            if (isUniversal) result.add(word1);
+        }
+        return result;
+    }
+    
+    private int[] getCount(String word) {
+        int[] ans = new int[26];
+        for (char ch : word.toCharArray()) {
+            ans[ch - 'a'] ++;
+        }
+        return ans;
+    }
+}
