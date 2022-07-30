@@ -72,3 +72,27 @@ class Solution {
         }
     }
 }
+
+// No need to use colors because this is a DAG
+class Solution {
+    public List<List<Integer>> allPathsSourceTarget(int[][] graph) {
+        List<List<Integer>> result = new ArrayList<>();
+        LinkedList<Integer> path = new LinkedList<>();
+        
+        dfs(0, path, graph, result);
+        
+        return result;
+    }
+    
+    private void dfs(int start, LinkedList<Integer> path, int[][] graph, List<List<Integer>> result) {
+        path.add(start);
+        if (start == graph.length - 1) {
+            result.add(new ArrayList<>(path));
+        }
+        int[] neighbours = graph[start];
+        for (int neighbour : neighbours) {
+            dfs(neighbour, path, graph, result);
+        }
+        path.removeLast();
+    }
+}
