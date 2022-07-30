@@ -39,3 +39,36 @@ class AllPathsFromSourcetoTarget {
         return result;
     }    
 }
+
+
+class Solution {
+    private static int WHITE = 1;
+    private static int GRAY = 2;
+    
+    public List<List<Integer>> allPathsSourceTarget(int[][] graph) {
+        Map<Integer, Integer> color = new HashMap<>(); 
+        for (int i = 0; i < graph.length; i++) {
+            color.put(i, WHITE);
+        }
+        List<List<Integer>> result = new ArrayList<>();
+        dfs(0, graph, result, new LinkedList<>(), color);
+        return result;
+    }
+    
+    private void dfs(int start, int[][] graph, List<List<Integer>> result, LinkedList<Integer> path, Map<Integer, Integer> color) {
+        if (color.get(start) == WHITE) {
+            color.put(start, GRAY);
+            path.add(start);
+            if (start == graph.length - 1) {
+                result.add(new LinkedList<>(path));
+            }
+            int[] neighbours = graph[start];
+            for (int neighbour : neighbours) {
+                dfs(neighbour, graph, result, path, color);
+            }
+            path.removeLast();
+            
+            color.put(start, WHITE);
+        }
+    }
+}
