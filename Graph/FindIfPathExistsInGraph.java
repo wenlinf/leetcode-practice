@@ -106,3 +106,40 @@ class Solution {
         return false;
     }
 }
+
+// BFS solution
+class Solution {
+    public boolean validPath(int n, int[][] edges, int source, int destination) {
+        if (source == destination) return true;
+        Map<Integer, List<Integer>> adjList = new HashMap<>();
+        for (int[] edge : edges) {
+            int from = edge[0];
+            int to = edge[1];
+            if (!adjList.containsKey(from)) {
+                adjList.put(from, new ArrayList<>());
+            }
+            if (!adjList.containsKey(to)) {
+                adjList.put(to, new ArrayList<>());
+            }
+            adjList.get(from).add(to);
+            adjList.get(to).add(from);
+        }
+        LinkedList<Integer> queue = new LinkedList<>();
+        queue.add(source);
+        Set<Integer> seen = new HashSet<>();
+        while (!queue.isEmpty()) {
+            int start = queue.poll();
+            seen.add(start);
+            if (!adjList.containsKey(start)) {
+                if (start != destination) return false;
+                return true;
+            }
+            List<Integer> neighbours = adjList.get(start);
+            for (int neighbour : neighbours) {
+                if (neighbour == destination) return true;
+                if (!seen.contains(neighbour)) queue.add(neighbour);
+            }
+        }
+        return false;
+    }
+}
