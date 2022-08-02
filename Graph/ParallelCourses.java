@@ -41,3 +41,46 @@ class ParallelCourses {
         return result;
     }
 }
+
+
+class Solution {
+    public int minimumSemesters(int n, int[][] relations) {
+        Map<Integer, List<Integer>> adjList = new HashMap<>();
+        int[] inDegree = new int[n + 1];
+        inDegree[0] = -1;
+        for (int[] relation : relations) {
+            int from = relation[0];
+            int to = relation[1];
+            if (!adjList.containsKey(from)) {
+                adjList.put(from, new ArrayList<>());
+            }
+            adjList.get(from).add(to);
+            inDegree[to]++;
+        }
+        LinkedList<Integer> queue = new LinkedList<>();
+        for (int i = 0; i <= n; i++) {
+            if (inDegree[i] == 0) queue.add(i);
+        }
+        int semesters = 0;
+        while (!queue.isEmpty()) {
+            int levelSize = queue.size();
+            semesters++;
+            while (levelSize > 0) {
+                int start = queue.poll();
+                levelSize--;
+                if (adjList.containsKey(start)) {
+                    List<Integer> neighbours = adjList.get(start);
+                    for (int neighbour : neighbours) {
+                        inDegree[neighbour]--;
+                        if (inDegree[neighbour] == 0) queue.add(neighbour);
+                    }
+                }
+                
+            }
+        }
+        for (int i = 0; i <= n; i++) {
+            if (inDegree[i] > 0) return -1;
+        }
+        return semesters;
+    }
+}
