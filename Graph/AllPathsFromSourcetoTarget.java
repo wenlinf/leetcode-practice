@@ -96,3 +96,40 @@ class Solution {
         path.removeLast();
     }
 }
+
+
+//BFS solution
+class Solution {
+    public List<List<Integer>> allPathsSourceTarget(int[][] graph) {
+        //build the graph
+        Map<Integer, List<Integer>> adjList = new HashMap<>();
+        int n = graph.length;
+        for (int i = 0; i < n; i++) {
+            List<Integer> neighbours = new ArrayList<>();
+            for (int j = 0; j < graph[i].length; j++) {
+                neighbours.add(graph[i][j]);
+            }
+            adjList.put(i, neighbours);
+        }
+        List<List<Integer>> result = new ArrayList<>();
+        LinkedList<List<Integer>> queue = new LinkedList<>();
+        List<Integer> path = new ArrayList<>();
+        path.add(0);
+        queue.add(path);
+        while (!queue.isEmpty()) {
+            List<Integer> first = queue.poll();
+            int prev = first.get(first.size() - 1);
+            List<Integer> neighbours = adjList.get(prev);
+            for (int neighbour : neighbours) {
+                List<Integer> temp = new LinkedList<>(first);
+                temp.add(neighbour);
+                if (neighbour == n - 1){ 
+                    result.add(temp);
+                    continue;
+                }
+                queue.add(temp);
+            }
+        }
+        return result;
+    }
+}
