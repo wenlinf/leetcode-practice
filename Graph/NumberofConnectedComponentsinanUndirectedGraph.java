@@ -57,3 +57,47 @@ class Solution {
         }  
     }
 }
+
+
+
+// DFS solution
+class Solution {
+    public int countComponents(int n, int[][] edges) {
+        Map<Integer, List<Integer>> adjList = new HashMap<>();
+        for (int[] edge : edges) {
+            int from = edge[0];
+            int to = edge[1];
+            if (!adjList.containsKey(from)) {
+                adjList.put(from, new ArrayList<>());
+            }
+            if (!adjList.containsKey(to)) {
+                adjList.put(to, new ArrayList<>());
+            }
+            adjList.get(from).add(to);
+            adjList.get(to).add(from);
+        }
+        int components = 0;
+        Set<Integer> visited = new HashSet<>();
+        for (int i = 0; i < n; i++) {
+            if (!visited.contains(i)) {
+                dfs(i, adjList, visited);
+                components++;
+            }
+        }
+        
+        return components;
+    }
+    
+    private void dfs(int start, Map<Integer, List<Integer>> adjList, Set<Integer> visited) {
+        visited.add(start);
+        if (!adjList.containsKey(start)) {
+            return;
+        }
+        List<Integer> neighbours = adjList.get(start);
+        for (int neighbour : neighbours) {
+            if (!visited.contains(neighbour)) {
+                dfs(neighbour, adjList, visited);
+            }
+        }
+    }
+}
