@@ -51,3 +51,42 @@ class WallsAndGates {
         return neighbors;
     }
 }
+
+
+
+//same solution code different
+class Solution {
+    private int[][] directions = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+    public void wallsAndGates(int[][] rooms) {
+        int m = rooms.length;
+        int n = rooms[0].length;
+        LinkedList<int[]> queue = new LinkedList<>();
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (rooms[i][j] == 0) {
+                    queue.add(new int[]{i, j});
+                }
+            }
+        }
+        while (!queue.isEmpty()) {
+            int[] gate = queue.poll();
+            int gateX = gate[0];
+            int gateY = gate[1];
+            for (int[] direction : directions) {
+                int x = direction[0];
+                int y = direction[1];
+                int row = x + gateX;
+                int col = y + gateY;
+                if (row >= 0 && col >= 0 && row < m && col < n) {
+                    if (rooms[row][col] != -1) {
+                        if (rooms[row][col] > rooms[gateX][gateY] + 1) {
+                            rooms[row][col] = rooms[gateX][gateY] + 1;
+                            queue.add(new int[]{row, col});
+                        }
+                        
+                    } 
+                }
+            }
+        }
+    }
+}
