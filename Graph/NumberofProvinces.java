@@ -114,3 +114,5 @@ class Solution {
         }
     }
 }
+
+// DFS no need to build an adj list
