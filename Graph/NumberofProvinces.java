@@ -75,3 +75,42 @@ class Solution {
         */
     }
 }
+
+
+//DFS solution
+class Solution {
+    public int findCircleNum(int[][] isConnected) {
+        int n = isConnected.length;
+        Map<Integer, List<Integer>> adjList = new HashMap<>();
+        for (int i = 0; i < n; i++) {
+            List<Integer> list = new ArrayList<>();
+            for (int j = 0; j < n; j++) {
+                if (j != i && isConnected[i][j] == 1) {
+                    list.add(j);
+                }
+            }
+            adjList.put(i, list);
+        }
+        Set<Integer> seen = new HashSet<>();
+        int provinces = 0;
+        for (int i = 0; i < n; i++) {
+            if (!seen.contains(i)) {
+                provinces++;
+                dfs(i, adjList, seen);
+            }
+        }
+        return provinces;
+    }
+    
+    private void dfs(int start, Map<Integer, List<Integer>> adjList, Set<Integer> seen) {
+        seen.add(start);
+        if (adjList.containsKey(start)) {
+            List<Integer> neighbors = adjList.get(start);
+            for (int neighbor : neighbors) {
+                if (!seen.contains(neighbor)) {
+                    dfs(neighbor, adjList, seen);
+                }
+            }
+        }
+    }
+}
