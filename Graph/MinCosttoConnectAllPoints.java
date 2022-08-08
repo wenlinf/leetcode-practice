@@ -74,3 +74,70 @@ class MinCosttoConnectAllPoints {
         return rootX == rootY;
     }
 }
+
+
+//Prim
+class Solution {
+    public int minCostConnectPoints(int[][] points) {
+        int n = points.length;
+        UnionFind uf = new UnionFind(n);
+        Set<Integer> visited = new HashSet<>();
+        visited.add(0);
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[0] - b[0]);
+        for (int i = 0; i < n; i++) {
+            int distance = Math.abs(points[0][0] - points[i][0]) + Math.abs(points[0][1] - points[i][1]);
+            pq.add(new int[]{distance, 0, i});
+        }
+        int minCost = 0;
+        while (visited.size() != n) {
+            int[] smallest = pq.poll();
+            int curr = smallest[2];
+            if (visited.contains(curr)) continue;
+            minCost += smallest[0];
+            visited.add(curr);
+            for (int i = 0; i < n; i++) {
+                if (!visited.contains(i)) {
+                    int distance = Math.abs(points[curr][0] - points[i][0]) + Math.abs(points[curr][1] - points[i][1]);
+                    pq.add(new int[]{distance, curr, i});
+                }
+            }
+        }
+        return minCost;
+    }
+}
+
+class UnionFind {
+    private int[] root;
+    private int[] rank;
+    
+    public UnionFind(int size) {
+        this.root = new int[size];
+        this.rank = new int[size];
+        for (int i = 0; i < size; i++) {
+            this.root[i] = i;
+            this.rank[i] = 0;
+        }
+    }
+    
+    public int find(int x) {
+        if (x == root[x]) return x;
+        return root[x] = find(root[x]);
+    }
+    
+    public void union(int x, int y) {
+        int rootX = find(x);
+        int rootY = find(y);
+        if (rank[rootX] > rank[rootY]) {
+            root[rootY] = rootX;
+        } else if (rank[rootX] < rank[rootY]) {
+            root[rootX] = rootY;
+        } else {
+            root[rootY] = rootX;
+            rank[rootX]++;
+        }
+    }
+    
+    public boolean connected(int x, int y) {
+        return find(x) == find(y);
+    }
+}
