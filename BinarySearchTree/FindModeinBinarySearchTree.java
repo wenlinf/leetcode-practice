@@ -42,3 +42,68 @@ class Solution {
         helper(root.right, map);
     }
 }
+
+
+
+// O(1) extra space solution
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    private TreeNode prev;
+    public int[] findMode(TreeNode root) {
+        this.modes = new ArrayList<>();
+        traverse(root);
+        
+        int n = modes.size();
+        int[] result = new int[n];
+        for (int i = 0; i < n; i++) {
+            result[i] = modes.get(i);
+        }
+        return result;
+    }
+    
+    private int currCount; 
+    private int maxCount;
+    private List<Integer> modes;
+    private void traverse(TreeNode root) {
+        if (root == null) return;
+        traverse(root.left);
+        if (prev == null) {
+            currCount = 1;
+            maxCount = 1;
+            modes.add(root.val);
+        } else {
+            if (root.val == prev.val) {
+                currCount++;
+                if (currCount > maxCount) {
+                    maxCount = currCount;
+                    modes.clear();
+                    modes.add(root.val);
+                } else if (currCount == maxCount) {
+                    modes.add(root.val);
+                }
+            } else {
+                currCount = 1;
+                if (currCount == maxCount) {
+                    modes.add(root.val);
+                }
+            }
+        }
+        prev = root;
+
+        traverse(root.right);
+    }
+}
