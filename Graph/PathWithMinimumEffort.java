@@ -41,3 +41,39 @@ class Solution {
         visited.remove(list);
     }
 }
+
+
+// Dijkstra's
+class Solution {
+    private int[][] directions = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+    public int minimumEffortPath(int[][] heights) {
+        int m = heights.length;
+        int n = heights[0].length;
+        int[][] efforts = new int[m][n];
+        for (int i = 0; i < m; i++) {
+            Arrays.fill(efforts[i], Integer.MAX_VALUE);
+        }
+        efforts[0][0] = 0;
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[2] - b[2]);
+        pq.add(new int[]{0, 0, 0});
+        while (!pq.isEmpty()) {
+            int[] first = pq.poll();
+            int i = first[0];
+            int j = first[1];
+            int effort = first[2];
+            for (int[] direction : directions) {
+                int x = direction[0];
+                int y = direction[1];
+                int row = x + i;
+                int col = y + j;
+                if (row >= 0 && col >= 0 && row < m && col < n) {
+                    if (efforts[row][col] > Math.max(effort, Math.abs(heights[row][col] - heights[i][j]))) {
+                        efforts[row][col] = Math.max(effort, Math.abs(heights[row][col] - heights[i][j]));
+                        pq.offer(new int[]{row, col, efforts[row][col]});
+                    }  
+                }
+            }
+        }
+        return efforts[m - 1][n - 1];
+    }
+}
