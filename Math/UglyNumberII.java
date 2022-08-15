@@ -33,3 +33,33 @@ class Solution {
         return result.get(n - 1);
     }
 }
+
+//solution using heap. Have to take care of overflow. Use long and then convert to int
+class Solution {
+    public int nthUglyNumber(int n) {
+        PriorityQueue<Long> pq = new PriorityQueue<>();
+        Set<Long> seen = new HashSet<>();
+        pq.offer(1L);
+        seen.add(1L);
+        int index = 0;
+        
+        while (index < n - 1) {
+            long top = pq.poll();
+            if (!seen.contains(top * 2)) {
+                pq.offer(top * 2);
+                seen.add(top * 2);
+            }
+            if (!seen.contains(top * 3)) {
+                pq.offer(top * 3);
+                seen.add(top * 3);
+            }
+            if (!seen.contains(top * 5)) {
+                pq.offer(top * 5);
+                seen.add(top * 5);
+            }
+            index++;
+        }
+        long result = pq.poll();
+        return (int)result;
+    }
+}
