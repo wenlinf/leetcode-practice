@@ -32,3 +32,52 @@ class CheapestFlightsWithinKStops {
         return costs[k + 1][dst];
     }
 }
+
+
+// Dijkstra's
+class Solution {
+    public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
+        Map<Integer, List<int[]>> adjList = new HashMap<>();
+        for (int[] flight : flights) {
+            int from = flight[0];
+            int to = flight[1];
+            int price = flight[2];
+            if (!adjList.containsKey(from)) {
+                adjList.put(from, new ArrayList<>());
+            }
+            adjList.get(from).add(new int[]{to, price});
+        }
+        int[] curr = new int[n];
+        int[] currStops = new int[n];
+        Arrays.fill(curr, Integer.MAX_VALUE);
+        curr[src] = 0;
+        Arrays.fill(currStops, Integer.MAX_VALUE);
+        currStops[src] = 0;
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b)->a[1] - b[1]);
+        pq.offer(new int[]{src, 0, 0}); // index, price, stops
+        
+        while (!pq.isEmpty()) {
+            int[] start = pq.poll();
+            int index = start[0];
+            int cost = start[1];
+            int stops = start[2]; 
+            if (index == dst) return cost;
+            if (stops == k + 1) continue;
+            if (adjList.containsKey(index)) {
+                List<int[]> neighbors = adjList.get(index);
+                for (int[] neighbor : neighbors) {
+                    int neighborIndex = neighbor[0];
+                    int neighborCost = neighbor[1];
+                    if (curr[neighborIndex] > neighborCost + cost) {
+                        curr[neighborIndex] = neighborCost + cost;
+                        currStops[neighborIndex] = stops;
+                        pq.offer(new int[]{neighborIndex, curr[neighborIndex], stops + 1});
+                    } else if (stops < currStops[neighborIndex]) {
+                        pq.offer(new int[]{neighborIndex, neighborCost + cost, stops + 1});
+                    }
+                }
+            }
+        }
+        return curr[dst] == Integer.MAX_VALUE ? -1 : curr[dst];
+    }
+}
