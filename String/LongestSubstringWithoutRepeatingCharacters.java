@@ -50,3 +50,21 @@ class Solution {
         return len;
     }
 }
+
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        StringBuilder sb = new StringBuilder();
+        int n = s.length();
+        int result = 0;
+        for (int i = 0; i < n; i++) {
+            char ch = s.charAt(i);
+            int index = sb.indexOf(String.valueOf(ch));
+            if (index >= 0) {
+                result = Math.max(result, sb.length());
+                sb = sb.delete(0, index + 1);
+            }
+            sb.append(ch);
+        }
+        return Math.max(result, sb.length());
+    }
+}
