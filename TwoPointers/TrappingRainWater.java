@@ -23,3 +23,28 @@ class Solution {
         return result;
     }
 }
+
+//solution from labuladong two pointers
+class Solution {
+    public int trap(int[] height) {
+        int n = height.length;
+        if (n == 1) return 0;
+        int left = 0;
+        int right = n - 1;
+        int result = 0;
+        int leftMax = height[0];a
+        int rightMax = height[n - 1]; 
+        while (left < right) {
+            leftMax = Math.max(leftMax, height[left]);
+            rightMax = Math.max(rightMax, height[right]);
+            if (leftMax <= rightMax) {
+                result += leftMax - height[left];
+                left++;
+            } else {
+                result += rightMax - height[right];
+                right--;
+            }
+        }
+        return result;
+    }
+}
