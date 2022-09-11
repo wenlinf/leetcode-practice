@@ -56,3 +56,82 @@ class UndergroundSystem {
  * obj.checkOut(id,stationName,t);
  * double param_3 = obj.getAverageTime(startStation,endStation);
  */
+
+// check this video: https://www.youtube.com/watch?v=AXMSHVedysk
+// more extensible than leetcode solution
+class UndergroundSystem {
+    private Map<Integer, Event> checkinData;
+    private Map<String, Journey> journeyData;
+    private String final delimiter = "->";
+    public UndergroundSystem() {
+        checkinData = new HashMap<>();
+        journeyData = new HashMap<>();
+    }
+    
+    public void checkIn(int id, String stationName, int t) {
+        checkinData.put(id, new Event(id, stationName, t));
+    }
+    
+    public void checkOut(int id, String stationName, int t) {
+        Event checkin = checkinData.get(id);
+        String startStation = checkin.stationName;
+        int startTime = checkin.time;
+        String name = getRoute(startStation, stationName);
+        if (!journeyData.containsKey(name)) {
+            journeyData.put(name, new Journey(t - checkin.time, 1));
+        } else {
+            Journey journey = journeyData.get(name);
+            journey.updateJourney(t - startTime);
+        }
+        checkinData.remove(id);
+    }
+    
+    public double getAverageTime(String startStation, String endStation) {
+        String key = getRoute(startStation, endStation);
+        Journey journey = journeyData.get(key);
+        return journey.getAverage();
+    }
+    
+    private String getRoute(String startStation, String endStation) {
+        return startStation + delimiter + endStation;
+    }
+    
+    class Event {
+        public int id;
+        public String stationName;
+        public int time;
+        
+        public Event(int id, String stationName, int time) {
+            this.id = id;
+            this.stationName = stationName;
+            this.time = time;
+        }
+    }
+    
+    class Journey {
+        public int totalTime;
+        public int totalCount;
+        
+        public Journey(int totalTime, int totalCount) {
+            this.totalTime = totalTime;
+            this.totalCount = totalCount;
+        }
+        
+        public void updateJourney(int diff) {
+            totalTime += diff;
+            totalCount++;
+        }
+        
+        public double getAverage() {
+            return (double)totalTime / totalCount;
+        }
+    }
+}
+
+/**
+ * Your UndergroundSystem object will be instantiated and called as such:
+ * UndergroundSystem obj = new UndergroundSystem();
+ * obj.checkIn(id,stationName,t);
+ * obj.checkOut(id,stationName,t);
+ * double param_3 = obj.getAverageTime(startStation,endStation);
+ */
