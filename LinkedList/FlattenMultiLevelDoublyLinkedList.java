@@ -33,3 +33,40 @@ class FlattenMultiLevelDoublyLinkedList {
         return head;
     }
 }
+
+
+/*
+// Definition for a Node.
+class Node {
+    public int val;
+    public Node prev;
+    public Node next;
+    public Node child;
+};
+*/
+
+class Solution {
+    public Node flatten(Node head) {
+        Node curr = head;
+        Node tempNext = null;
+        while (curr != null) {
+            if (curr.child != null) {
+                tempNext = curr.next;
+                Node childIter = curr.child;
+                curr.next = childIter;
+                childIter.prev = curr;
+                curr.child = null;
+                while (childIter.next != null) {
+                    childIter = childIter.next;
+                }
+                childIter.next = tempNext;
+                if (tempNext != null) {
+                    tempNext.prev = childIter;
+                }
+                
+            } 
+            curr = curr.next;
+        }
+        return head;
+    }
+}
