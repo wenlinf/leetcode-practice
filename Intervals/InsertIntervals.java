@@ -22,3 +22,27 @@ class Solution {
         return list.toArray(new int[list.size()][]);
     }
 }
+
+// a better solution Time complexity O(n) space O(n)
+class Solution {
+    public int[][] insert(int[][] intervals, int[] newInterval) {
+        LinkedList<int[]> list = new LinkedList<>();
+        for (int[] interval : intervals) {
+            int newStart = newInterval[0];
+            int newEnd = newInterval[1];
+            int currStart = interval[0];
+            int currEnd = interval[1];
+            if (newEnd < currStart) {
+                list.add(newInterval);
+                newInterval = interval;
+            } else if (newStart > currEnd) {
+                list.add(interval);
+            } else {
+                int[] temp = new int[]{Math.min(currStart, newStart), Math.max(currEnd, newEnd)};
+                newInterval = temp;
+            }
+        }
+        list.add(newInterval);
+        return list.toArray(new int[list.size()][]);
+    }
+}
