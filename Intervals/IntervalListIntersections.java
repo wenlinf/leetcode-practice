@@ -82,3 +82,28 @@ class Solution {
         return list.toArray(new int[list.size()][]);
     }
 }
+
+class Solution {
+    public int[][] intervalIntersection(int[][] firstList, int[][] secondList) {
+        int pt1 = 0;
+        int pt2 = 0;
+        List<int[]> result = new ArrayList<>();
+        while (pt1 < firstList.length && pt2 < secondList.length) {
+            int[] first = firstList[pt1];
+            int[] second = secondList[pt2];
+            int firstStart = first[0];
+            int firstEnd = first[1];
+            int secondStart = second[0];
+            int secondEnd = second[1];
+            if (firstStart <= secondEnd && secondStart <= firstEnd) {
+                result.add(new int[]{Math.max(firstStart, secondStart), Math.min(firstEnd, secondEnd)});
+            }
+            if (firstEnd < secondEnd) {
+                pt1++;
+            } else {
+                pt2++;
+            }
+        }
+        return result.toArray(new int[result.size()][]);
+    }
+}
