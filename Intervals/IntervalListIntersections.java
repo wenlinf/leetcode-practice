@@ -40,3 +40,45 @@ class Solution {
         return list.toArray(new int[list.size()][2]);
     }
 }
+
+// Two pointer, O(n+m) time, O(1) or O(m+n) space?
+class Solution {
+    public int[][] intervalIntersection(int[][] firstList, int[][] secondList) {
+        if (firstList.length == 0 && secondList.length == 0) return new int[0][0];
+        int pt1 = 0;
+        int pt2 = 0;
+        List<int[]> list = new ArrayList<>();
+        while (pt1 < firstList.length && pt2 < secondList.length) {
+            int[] first = firstList[pt1];
+            int[] second = secondList[pt2];
+            if (second[0] > first[1]) {
+                pt1++;
+            } else if (first[0] > second[1]) {
+                pt2++;
+            } else if (first[0] == second[1]) {
+                list.add(new int[]{first[0], first[0]});
+                pt2++;
+            } else if (first[1] == second[0]) {
+                list.add(new int[]{first[1], first[1]});
+                pt1++;
+            } else if (first[0] < second[1]) {
+                if (first[1] <= second[1]) {
+                    list.add(new int[]{Math.max(first[0], second[0]), first[1]});
+                    pt1++;
+                } else {
+                    list.add(new int[]{Math.max(first[0], second[0]), second[1]});
+                    pt2++;
+                }
+            } else if (second[0] < first[1]) {
+                if (second[1] <= first[1]) {
+                    list.add(new int[]{Math.max(first[0], second[0]), second[1]});
+                    pt2++;
+                } else {
+                    list.add(new int[]{Math.max(first[0], second[0]), first[1]});
+                    pt1++;
+                }
+            }
+        }
+        return list.toArray(new int[list.size()][]);
+    }
+}
