@@ -58,3 +58,27 @@ class Solution {
         return result;
     }
 }
+
+class Solution {
+    public int minMeetingRooms(int[][] intervals) {
+        Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        int result = 0;
+        for (int[] interval : intervals) {
+            if (pq.size() != 0) {
+                int earliestEnd = pq.poll();
+                if (earliestEnd <= interval[0]) {
+                    pq.offer(interval[1]);
+                } else {
+                    result++;
+                    pq.offer(interval[1]);
+                    pq.offer(earliestEnd);
+                }
+            } else {
+                result++;
+                pq.offer(interval[1]);
+            }
+        }
+        return result;  
+    }
+}
