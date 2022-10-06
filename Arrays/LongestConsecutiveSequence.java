@@ -67,3 +67,28 @@ class UnionFind {
         return find(x) == find(y);
     }
 }
+
+// HashSet O(n) time solution
+class Solution {
+    public int longestConsecutive(int[] nums) {
+        int n = nums.length;
+        Set<Integer> set = new HashSet<>();
+        
+        for (int i = 0; i < n; i++) {
+            set.add(nums[i]);
+        }
+        int longest = 0;
+        for (int num : nums) {
+            if (!set.contains(num - 1)) {
+                int currLen = 1;
+                int increase = num + 1;
+                while (set.contains(increase)) {
+                    currLen++;
+                    increase++;
+                }
+                longest = Math.max(longest, currLen);
+            }
+        }
+        return longest;
+    }
+}
