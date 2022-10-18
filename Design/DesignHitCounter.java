@@ -87,3 +87,53 @@ class HitCounter {
  * obj.hit(timestamp);
  * int param_2 = obj.getHits(timestamp);
  */
+
+class HitCounter {
+    private int RECORD = 300;
+    private int counts[];
+    private int lastTimestamp;
+    private int lastPosition;
+    private int sum;
+    
+
+    public HitCounter() {
+        this.counts = new int[RECORD];
+        this.lastTimestamp = 0;
+        this.lastPosition = 0;
+        this.sum = 0;
+    }
+    
+    public void hit(int timestamp) {
+        if (timestamp == this.lastTimestamp) {
+            this.counts[lastPosition]++;
+        } else {
+            int update = Math.min(RECORD, timestamp - lastTimestamp);
+            for (int i = 0; i < update; i++) {
+                lastPosition = (lastPosition + 1) % RECORD;
+                sum -= counts[lastPosition];
+                counts[lastPosition] = 0;
+            }
+            counts[lastPosition] = 1;
+        }
+        this.lastTimestamp = timestamp;
+        this.sum++;
+    }
+    
+    public int getHits(int timestamp) {
+        int update = Math.min(this.RECORD, timestamp - lastTimestamp);
+        for (int i = 0; i < update; i++) {
+            this.lastPosition = (this.lastPosition + 1) % RECORD;
+            sum -= counts[lastPosition];
+            counts[lastPosition] = 0;
+        }
+        this.lastTimestamp = timestamp;
+        return sum;
+    }
+}
+
+/**
+ * Your HitCounter object will be instantiated and called as such:
+ * HitCounter obj = new HitCounter();
+ * obj.hit(timestamp);
+ * int param_2 = obj.getHits(timestamp);
+ */
