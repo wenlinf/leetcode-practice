@@ -81,12 +81,7 @@ class HitCounter {
     }
 }
 
-/**
- * Your HitCounter object will be instantiated and called as such:
- * HitCounter obj = new HitCounter();
- * obj.hit(timestamp);
- * int param_2 = obj.getHits(timestamp);
- */
+
 
 class HitCounter {
     private int RECORD = 300;
@@ -131,9 +126,40 @@ class HitCounter {
     }
 }
 
-/**
- * Your HitCounter object will be instantiated and called as such:
- * HitCounter obj = new HitCounter();
- * obj.hit(timestamp);
- * int param_2 = obj.getHits(timestamp);
- */
+
+// same as above, but can extract the cleaning to a seperate method
+// time complexity is O(1)? since the array is of size 300 which is a constant. And for both hit and getHits at most we have to clean the whole array
+// space complexity is O(1)? because the array is of size 300 and we are only creating a constant number of variables
+class HitCounter {
+    private int duration = 300;
+    private int[] hits;
+    private int lastPosition;
+    private int lastTimestamp;
+    private int totalCount;
+    
+    public HitCounter() {
+        this.hits = new int[duration];
+    }
+    
+    public void hit(int timestamp) {
+        clean(timestamp);
+        this.hits[lastPosition]++;
+        this.totalCount++;
+    }
+    
+    public int getHits(int timestamp) {
+        clean(timestamp);
+        return this.totalCount;
+    }
+    
+    private void clean(int timestamp) {
+        int diff = Math.min(duration, timestamp - lastTimestamp);
+        for (int i = 0; i < diff; i++) {
+            int index = (lastPosition + i + 1) % duration;
+            this.totalCount -= this.hits[index];
+            this.hits[index] = 0;
+        }
+        this.lastTimestamp = timestamp;
+        this.lastPosition = (this.lastPosition + diff) % duration;
+    }
+}
