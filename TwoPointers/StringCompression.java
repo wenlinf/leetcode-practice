@@ -54,3 +54,28 @@ class Solution {
 
     }
 }
+
+// cleaner code from: https://leetcode.com/problems/string-compression/discuss/1261732/Java-Easy-Solution.-1ms-Faster-than-94-submissions
+class Solution {
+    public int compress(char[] chars) {    
+        int left = 0;
+        int right = 0;
+        int count = 0;
+        while (right < chars.length) {
+            char rightChar = chars[right];
+            count++;
+            if (right == chars.length - 1 || chars[right] != chars[right + 1]) {
+                chars[left++] = rightChar;
+                if (count > 1) {
+                    String len = String.valueOf(count);
+                    for (char ch : len.toCharArray()) {
+                        chars[left++] = ch;
+                    }
+                }
+                count = 0;
+            }
+            right++;
+        }
+        return left;     
+    }
+}
