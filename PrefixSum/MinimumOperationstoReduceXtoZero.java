@@ -31,3 +31,30 @@ class Solution {
         
     }
 }
+
+
+class Solution {
+    public int minOperations(int[] nums, int x) {
+        int sum = 0;
+        for (int num : nums) {
+            sum += num;
+        }
+        if (sum == x) return nums.length;
+        int left = 0;
+        int curr = 0;
+        int target = sum - x;
+        int max = -1; 
+        for (int right = 0; right < nums.length; right++) {
+            curr += nums[right];
+            while (curr > target && left < nums.length) {
+                curr -= nums[left];
+                left++;
+            }
+            if (curr == target) {
+                max = Math.max(max, right - left + 1);
+            }
+        }
+        return max == -1 ? -1 : nums.length - max;
+        
+    }
+}
