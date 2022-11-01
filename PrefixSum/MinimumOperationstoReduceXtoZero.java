@@ -58,3 +58,28 @@ class Solution {
         
     }
 }
+
+
+class Solution {
+    public int minOperations(int[] nums, int x) {
+        int curr = 0;
+        for (int num : nums) {
+            curr += num;
+        }
+        if (curr == x) return nums.length;
+        
+        int left = 0;
+        int min = Integer.MAX_VALUE;
+        for (int right = 0; right < nums.length; right++) {
+            curr -= nums[right];
+            while (curr < x && left <= right) {
+                curr += nums[left];
+                left++;
+            }
+            if (curr == x) {
+                min = Math.min(min, (nums.length - 1 - right) + left);
+            }
+        }
+        return min == Integer.MAX_VALUE ? -1 : min;
+    }
+}
