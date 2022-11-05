@@ -65,3 +65,42 @@ class Solution {
         return heights.length - 1;
     }
 }
+
+// binary search solution from leetcode
+class Solution {
+    public int furthestBuilding(int[] heights, int bricks, int ladders) {
+        int lo = 0;
+        int hi = heights.length - 1;
+        while (lo < hi) {
+            int mid = lo + (hi - lo + 1) / 2;
+            if (reachable(heights, bricks, ladders, mid)) {
+                lo = mid;
+            } else {
+                hi = mid - 1;
+            }
+        }
+        return lo;
+    }
+
+    private boolean reachable(int[] heights, int bricks, int ladders, int index) {
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        for (int i = 1; i <= index; i++) {
+            int diff = heights[i] - heights[i - 1];
+            if (diff > 0) {
+                pq.add(diff);
+            }
+        }
+        while (pq.size() > 0) {
+            int min = pq.poll();
+            if (bricks >= min) {
+                bricks -= min;
+            } else if (ladders > 0) {
+                ladders--;
+            } else {
+                return false;
+            }
+            
+        }
+        return true;
+    }
+}
