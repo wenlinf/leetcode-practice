@@ -44,3 +44,24 @@ class Solution {
         return heights.length - 1;
     }
 }
+
+// solution using max heap, same idea
+class Solution {
+    public int furthestBuilding(int[] heights, int bricks, int ladders) {
+        PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> b - a);
+        for (int i = 1; i < heights.length; i++) {
+            int diff = heights[i] - heights[i - 1];
+            if (diff > 0) {
+                pq.add(diff);
+                bricks -= diff;
+                if (bricks < 0) {
+                    int max = pq.poll();
+                    bricks += max;
+                    ladders--;
+                    if (ladders < 0) return i - 1;
+                }
+            }
+        }
+        return heights.length - 1;
+    }
+}
