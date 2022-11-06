@@ -17,3 +17,16 @@ class Solution {
         return -1;
     }
 }
+
+
+// leetcode solution using Newton's method: https://www.youtube.com/watch?time_continue=525&v=cOmAk82cr9M&feature=emb_logo
+class Solution {
+    public boolean isPerfectSquare(int num) {
+        if (num < 2) return true;
+        long seed = num / 2;
+        while (seed * seed > num) {
+            seed = (seed + num / seed) / 2;
+        }
+        return (seed * seed == num);
+    }
+}
