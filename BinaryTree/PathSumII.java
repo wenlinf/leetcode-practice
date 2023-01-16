@@ -62,3 +62,48 @@ class Solution {
     }
 
 }
+
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    List<List<Integer>> result = new ArrayList<>();
+    public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
+        if (root == null) return result;
+        backtrack(root, targetSum, new LinkedList<>());
+        return result;
+    }
+
+    private void backtrack(TreeNode root, int targetSum, LinkedList<Integer> path) {
+        if (root == null) {
+            return;
+        }
+        if (root.left == null && root.right == null) {
+            if (targetSum == root.val) {
+                path.add(root.val);
+                this.result.add(new ArrayList<>(path));
+                path.removeLast();
+            }
+            return;
+        }
+        targetSum -= root.val;
+        path.add(root.val);
+        backtrack(root.left, targetSum, path);
+        backtrack(root.right, targetSum, path);
+        path.removeLast();
+        targetSum += root.val;
+    }
+}
