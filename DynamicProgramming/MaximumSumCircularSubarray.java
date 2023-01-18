@@ -26,3 +26,23 @@ class Solution {
         return Math.max(specialSum, maxSum);
     }
 }
+
+class Solution {
+    public int maxSubarraySumCircular(int[] nums) {
+        int currMin = 0;
+        int currMax = 0;
+        int maxSum = nums[0];
+        int minSum = nums[0];
+        int sum = 0;
+        
+        int n = nums.length;
+        for (int i = 0; i < n; i++) {
+            currMax = Math.max(nums[i] + currMax, nums[i]);
+            maxSum = Math.max(currMax, maxSum);
+            currMin = Math.min(currMin + nums[i], nums[i]);
+            minSum = Math.min(minSum, currMin);
+            sum += nums[i];
+        }
+        return sum == minSum ? maxSum : Math.max(maxSum, sum - minSum);
+    }
+}
